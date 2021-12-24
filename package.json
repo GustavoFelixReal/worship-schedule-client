@@ -2,18 +2,43 @@
   "name": "worship-schedule-client",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "yarn lint:js && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "lint:js": "eslint \"**/*.{js,jsx,ts,tsx}\""
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.8.0",
+    "@chakra-ui/react": "^1.7.3",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@hookform/resolvers": "^2.8.5",
+    "@material-ui/core": "^5.0.0-beta.5",
+    "@material-ui/icons": "^4.11.2",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "framer-motion": "^5.5.5",
     "next": "12.0.2",
+    "nprogress": "^0.2.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.22.4",
+    "react-icons": "^4.3.1",
+    "react-toastify": "^8.1.0",
+    "socket.io-client": "^4.3.2",
+    "styled-components": "^5.3.3",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.34",
+    "@types/socket.io-client": "^3.0.0",
+    "@types/styled-components": "^5.1.15",
+    "babel-plugin-styled-components": "^1.13.3",
     "eslint": "7",
-    "eslint-config-next": "12.0.2"
+    "eslint-config-next": "12.0.2",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4"
   }
 }
