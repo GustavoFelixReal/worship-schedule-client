@@ -1,74 +1,63 @@
+import {
+  Box,
+  Heading,
+  Divider,
+  Table,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  Badge
+} from '@chakra-ui/react'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useCallback, useEffect, useState } from 'react'
-import { useIo } from '../../contexts/SocketIoContext'
+import { Link } from '../../components/common/Link'
+import { useSchedules } from '../../hooks/useSchedules'
 
-interface ScheduleItem {
-  id: number
-  scheduleId: number
-  type: string
-  status: string
-  name: string
-  order: number
-  fileName: string
-  createdAt: string
-  createdBy: number
-  updatedAt: string
-  updatedBy: number
-  isDeleted: boolean
-}
-
-interface SocketResponse {
-  scheduleItems?: ScheduleItem[]
-}
-
-interface ScheduleEmitter {
-  scheduleItem?: ScheduleItem
-}
-
-export default function Schedule() {
+const Schedules: NextPage = () => {
   const router = useRouter()
-  const socket = useIo()
 
-  const [checkedItems, setCheckedItems] = useState([])
-  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([])
-
-  console.log(router.query)
-
-  // useEffect(() => {
-  //   const params = { churchId: 1, scheduleId: router.query.id }
-
-  //   socket.emit(
-  //     'get_schedule_items',
-  //     { params },
-  //     ({ scheduleItems }: SocketResponse) => {
-  //       setScheduleItems(Array.isArray(scheduleItems) ? [...scheduleItems] : [])
-  //     }
-  //   )
-  // }, [])
-
-  // const handleToggle = useCallback(
-  //   (id: number) => {
-  //     const newCheckedItems = checkedItems
-  //     const checkedItem = newCheckedItems.findIndex(
-  //       (checked) => checked.id === id
-  //     )
-
-  //     if (checkedItem) {
-  //       newCheckedItems.splice(checkedItem, 1)
-  //     } else {
-  //       newCheckedItems.push(id)
-  //     }
-
-  //     setCheckedItems([...newCheckedItems])
-  //   },
-  //   [checkedItems]
-  // )
+  const { schedules } = useSchedules()
 
   return (
-    <>
-      {scheduleItems.map((scheduleItem) => (
-        <h1 key={scheduleItem.scheduleId}>Item</h1>
-      ))}
-    </>
+    <Box>
+      <Heading size="lg" fontWeight="normal">
+        Agendas
+      </Heading>
+
+      <Divider my="6" borderColor="gray.700" />
+      <Table colorScheme="whiteAlpha" variant="striped">
+        <Thead>
+          <Tr>
+            {/*<Th px={['4', '4', '6']} color="gray.300" width="8">
+              <Checkbox colorScheme="pink" />
+            </Th> */}
+            <Th>Agenda</Th>
+            <Th>Situação</Th>
+            <Th>Data</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {schedules.map((schedule) => (
+            <Tr key={schedule.id}>
+              {/* <Td px={['4', '4', '6']}>
+                <Checkbox colorScheme="pink" />
+              </Td> */}
+              <Td>
+                <Link href={`schedules/${schedule.id}`}>{schedule.name}</Link>
+              </Td>
+              <Td>
+                <Badge colorScheme="yellow">{schedule.status}</Badge>
+              </Td>
+              <Td>{schedule.date}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </Box>
   )
 }
+
+export default Schedules

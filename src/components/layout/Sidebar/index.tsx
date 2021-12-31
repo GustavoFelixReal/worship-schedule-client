@@ -4,7 +4,7 @@ import { useSidebarDrawer } from '../../../contexts/SidebarDrawerContext'
 
 import { SidebarNav } from './SidebarNav'
 
-export function Sidebar() {
+export const Sidebar: React.FC = () => {
   const { isOpen, onClose } = useSidebarDrawer()
 
   const isDrawerSidebar = useBreakpointValue({

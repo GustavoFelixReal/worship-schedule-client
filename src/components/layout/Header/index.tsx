@@ -1,14 +1,10 @@
-import { useSidebarDrawer } from '../../../contexts/SidebarDrawerContext'
-
-import { Flex, Icon, IconButton, useBreakpointValue } from '@chakra-ui/react'
+import { BurgerButton } from './BurgerButton'
+import { Flex, useBreakpointValue } from '@chakra-ui/react'
 import { Logo } from './Logo'
 import { NotificationsNav } from './NotificationsNav'
 import { Profile } from './Profile'
-import { RiMenuLine } from 'react-icons/ri'
 
-export default function Header() {
-  const { onOpen } = useSidebarDrawer()
-
+export const Header: React.FC = () => {
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true
@@ -26,14 +22,7 @@ export default function Header() {
       align="center"
     >
       {!isWideVersion && (
-        <IconButton 
-          aria-label="Open navigation"
-          icon={<Icon as={RiMenuLine} />}
-          fontSize="24"
-          variant="unstyled"
-          onClick={onOpen}
-          mr="2"
-        />
+        <BurgerButton />
       )}
 
       <Logo />
@@ -45,3 +34,4 @@ export default function Header() {
     </Flex>
   )
 }
+

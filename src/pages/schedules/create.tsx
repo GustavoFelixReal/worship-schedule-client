@@ -9,33 +9,40 @@ import {
   VStack
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../../components/common/Form/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
+import { useSchedules } from '../../hooks/useSchedules'
+import { NextPage } from 'next'
+
+type CreateScheduleFormData = {
+  name: string
+  date: string
+}
 
 const createUserFormSchema = yup.object().shape({
   name: yup.string().required('Nome obrigatório'),
-  email: yup.string().required('E-mail obrigatório').email('E-mail inválido'),
-  password: yup
-    .string()
-    .required('Senha obrigatória')
-    .min(6, 'No mínimo 6 caracteres'),
-  password_confirmation: yup
-    .string()
-    .oneOf([null, yup.ref('password')], 'As senhas precisam ser iguais')
+  date: yup.date().required('A data é obrigatória')
 })
 
-export default function CreateSchedule() {
+const CreateSchedule: NextPage = () => {
+  const { createSchedule } = useSchedules()
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createUserFormSchema)
   })
   const { errors } = formState
-  
+
+  const handleCreateSchedule: SubmitHandler<CreateScheduleFormData> = async (
+    values
+  ) => {
+    createSchedule(values)
+  }
+
   return (
-    <>
+    <Box as="form" onSubmit={handleSubmit(handleCreateSchedule)}>
       <Heading size="lg" fontWeight="normal">
-        Criar usuário
+        Criar agenda
       </Heading>
 
       <Divider my="6" borderColor="gray.700" />
@@ -44,33 +51,17 @@ export default function CreateSchedule() {
         <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
           <Input
             name="name"
-            label="Nome completo"
+            label="Nome da agenda"
             error={errors.name}
+            defaultValue={`Agenda ${new Date().toLocaleDateString()}`}
             {...register('name')}
           />
           <Input
-            name="email"
-            type="email"
-            label="E-mail"
-            error={errors.email}
-            {...register('email')}
-          />
-        </SimpleGrid>
-
-        <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
-          <Input
-            name="password"
-            type="password"
-            label="Senha"
-            error={errors.password}
-            {...register('password')}
-          />
-          <Input
-            name="password_confirmation"
-            type="password"
-            label="Confirmação da senha"
-            error={errors.password_confirmation}
-            {...register('password_confirmation')}
+            name="date"
+            type="date"
+            label="Data"
+            error={errors.date}
+            {...register('date')}
           />
         </SimpleGrid>
       </VStack>
@@ -91,6 +82,8 @@ export default function CreateSchedule() {
           </Button>
         </HStack>
       </Flex>
-    </>
+    </Box>
   )
 }
+
+export default CreateSchedule

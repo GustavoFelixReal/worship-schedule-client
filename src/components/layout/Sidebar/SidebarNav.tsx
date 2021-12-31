@@ -8,7 +8,7 @@ import { NavLink } from './NavLink'
 import { NavSection } from './NavSection'
 import { Stack } from '@chakra-ui/react'
 
-export function SidebarNav() {
+export const SidebarNav: React.FC = () => {
   return (
     <Stack spacing="12" align="flex-start">
       <NavSection title="GERAL">

@@ -1,6 +1,6 @@
 import { Text } from '@chakra-ui/react'
 
-export function Logo() {
+export const Logo: React.FC = () => {
   return (
     <Text
       fontSize={['2xl', '3xl']}

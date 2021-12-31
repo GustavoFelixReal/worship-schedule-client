@@ -6,13 +6,13 @@ import {
 } from '@chakra-ui/react'
 import { ActiveLink } from '../ActiveLink'
 
-interface NavLinkProps extends ChakraLinkProps {
+interface INavLink extends ChakraLinkProps {
   icon: React.ElementType
   children: string
   href: string
 }
 
-export function NavLink({ children, href, icon,...rest }: NavLinkProps) {
+export const NavLink: React.FC<INavLink> = ({ children, href, icon,...rest }) => {
   return (
     <ActiveLink href={href} passHref>
       <ChakraLink display="flex" align="center" {...rest}>

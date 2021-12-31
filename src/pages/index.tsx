@@ -1,9 +1,11 @@
-import Child from '../components/Child'
+import { NextPage } from "next"
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <>
-      <Child />
+      
     </>
   )
 }
+
+export default Home

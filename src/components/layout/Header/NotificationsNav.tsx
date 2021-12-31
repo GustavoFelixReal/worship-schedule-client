@@ -2,7 +2,7 @@ import { Button, HStack, Icon } from '@chakra-ui/react'
 import { RiAddLine, RiNotificationLine, RiUserAddLine } from 'react-icons/ri'
 import Link from 'next/link'
 
-export function NotificationsNav() {
+export const NotificationsNav: React.FC = () => {
   return (
     <HStack
       spacing={['1', '2']}

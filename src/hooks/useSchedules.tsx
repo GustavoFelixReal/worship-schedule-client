@@ -5,13 +5,13 @@ import {
   useEffect,
   useState
 } from 'react'
-import { toast } from 'react-toastify'
 import { useIo } from '../contexts/SocketIoContext'
 
-type Schedule = {
+export type Schedule = {
   id: number
   churchId: number
   name: string
+  date: string
   status: string
   createdAt: string
   createdBy: number
@@ -20,9 +20,14 @@ type Schedule = {
   isArchived: boolean
 }
 
+type CreateScheduleParams = {
+  name: string
+  date: string
+}
+
 interface SocketResponse {
   schedules?: Schedule[]
-  createSchedule: (name: string, churchId: number, userId: number) => void
+  createSchedule: (schedule: CreateScheduleParams) => void
 }
 
 interface ScheduleEmitter {
@@ -35,37 +40,40 @@ interface SchedulesProviderProps {
 
 export const SchedulesContext = createContext({} as SocketResponse)
 
-export function SchedulesProvider({ children }: SchedulesProviderProps) {
+export const SchedulesProvider: React.FC<SchedulesProviderProps> = ({
+  children
+}) => {
   const socket = useIo()
-
   const [schedules, setSchedules] = useState<Schedule[]>([])
 
-  useEffect(() => {
+  const getSchedules = useCallback(() => {
     const params = { churchId: 1 }
 
-    socket.emit('join_church', { params }, ({ schedules }: SocketResponse) => {
+    socket?.emit('join_church', { params }, ({ schedules }: SocketResponse) => {
       setSchedules([...schedules])
     })
-  }, [socket, setSchedules])
-
-  useEffect(() => {
-    socket.on('exception', (data) => {
-      toast.info(data.errors.join(', '))
-    })
-
-    socket.on('schedule', ({ schedule }: ScheduleEmitter) => {
-      setSchedules([...schedules, schedule])
-    })
-  }, [schedules, socket])
+  }, [socket])
 
   const createSchedule = useCallback(
-    (name: string, churchId: number, userId: number) => {
-      const params = { name, churchId, userId }
+    (schedule: CreateScheduleParams) => {
+      const params = { ...schedule, churchId: 1, userId: 1 }
 
-      socket.emit('create_schedule', { params })
+      socket?.emit('create_schedule', { params })
     },
-    []
+    [socket]
   )
+
+  useEffect(getSchedules, [])
+
+  useEffect(() => {
+    // socket.on('exception', (data) => {
+    //   toast.info(data.errors.join(', '))
+    // })
+
+    socket?.on('schedule', ({ schedule }: ScheduleEmitter) => {
+      setSchedules((previousSchedules) => [...previousSchedules, schedule])
+    })
+  }, [socket, setSchedules])
 
   return (
     <SchedulesContext.Provider value={{ schedules, createSchedule }}>

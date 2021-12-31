@@ -1,5 +1,4 @@
 import { ToastContainer } from 'react-toastify'
-import Header from '../components/layout/Header'
 import { IoProvider } from '../contexts/SocketIoContext'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -8,8 +7,7 @@ import { AppProps } from 'next/app'
 import { ApplicationLayout } from '../components/layout/ApplicationLayout'
 import { theme } from '../../styles/theme'
 
-function MyApp({ Component, pageProps }: AppProps) {
-  //<Component {...pageProps} />
+function WorshipScheduleApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <IoProvider>
@@ -33,4 +31,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default MyApp
+export default WorshipScheduleApp

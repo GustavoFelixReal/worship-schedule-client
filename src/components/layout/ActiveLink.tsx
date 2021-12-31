@@ -2,16 +2,16 @@ import Link, { LinkProps } from 'next/link'
 import { useRouter } from 'next/router'
 import { cloneElement } from 'react'
 
-interface ActiveLinkProps extends LinkProps {
+interface IActiveLink extends LinkProps {
   children: React.ReactElement
   shouldMatchExactHref?: boolean
 }
 
-export function ActiveLink({
+export const ActiveLink: React.FC<IActiveLink> = ({
   children,
   shouldMatchExactHref = false,
   ...rest
-}: ActiveLinkProps) {
+}) => {
   const { asPath } = useRouter()
 
   let isActive = false
