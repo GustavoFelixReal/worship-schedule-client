@@ -1,10 +1,11 @@
-import { Avatar, Box, Flex, Text } from '@chakra-ui/react'
+import { Avatar, Box, Flex, Text, useBreakpointValue } from '@chakra-ui/react'
 
-interface IProfile {
-  showProfileData?: boolean
-}
+export const Profile: React.FC = () => {
+  const showProfileData = useBreakpointValue({
+    base: false,
+    md: true
+  })
 
-export const Profile: React.FC<IProfile> = ({ showProfileData = true }) => {
   return (
     <Flex align="center">
       {showProfileData && (

@@ -13,6 +13,9 @@ export const BurgerButton: React.FC = () => {
       variant="unstyled"
       onClick={onOpen}
       mr="2"
+      align="center"
+      justify="center"
+      display="flex"
     />
   )
 }

@@ -7,7 +7,12 @@ import { Profile } from './Profile'
 export const Header: React.FC = () => {
   const isWideVersion = useBreakpointValue({
     base: false,
-    lg: true
+    sm: true,
+  })
+
+  const showBurgerButton = useBreakpointValue({
+    base: true,
+    lg: false,
   })
 
   return (
@@ -21,17 +26,14 @@ export const Header: React.FC = () => {
       px="6"
       align="center"
     >
-      {!isWideVersion && (
-        <BurgerButton />
-      )}
+      {showBurgerButton && <BurgerButton />}
 
       <Logo />
 
       <Flex align="center" ml="auto">
-        <NotificationsNav />
-        <Profile showProfileData={isWideVersion} />
+        {isWideVersion && <NotificationsNav />}
+        {isWideVersion && <Profile />}
       </Flex>
     </Flex>
   )
 }
-

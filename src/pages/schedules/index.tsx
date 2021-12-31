@@ -9,7 +9,8 @@ import {
   Th,
   Thead,
   Tr,
-  Badge
+  Badge,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -17,7 +18,10 @@ import { Link } from '../../components/common/Link'
 import { useSchedules } from '../../hooks/useSchedules'
 
 const Schedules: NextPage = () => {
-  const router = useRouter()
+  const isWideVersion = useBreakpointValue({
+    base: false,
+    sm: true
+  })
 
   const { schedules } = useSchedules()
 
@@ -28,7 +32,7 @@ const Schedules: NextPage = () => {
       </Heading>
 
       <Divider my="6" borderColor="gray.700" />
-      <Table colorScheme="whiteAlpha" variant="striped">
+      <Table colorScheme="whiteAlpha" variant="striped" size="sm">
         <Thead>
           <Tr>
             {/*<Th px={['4', '4', '6']} color="gray.300" width="8">
@@ -36,7 +40,7 @@ const Schedules: NextPage = () => {
             </Th> */}
             <Th>Agenda</Th>
             <Th>Situação</Th>
-            <Th>Data</Th>
+            {isWideVersion && <Th>Data</Th>}
           </Tr>
         </Thead>
         <Tbody>
@@ -51,7 +55,7 @@ const Schedules: NextPage = () => {
               <Td>
                 <Badge colorScheme="yellow">{schedule.status}</Badge>
               </Td>
-              <Td>{schedule.date}</Td>
+              {isWideVersion && <Td>{schedule.date}</Td>}
             </Tr>
           ))}
         </Tbody>
