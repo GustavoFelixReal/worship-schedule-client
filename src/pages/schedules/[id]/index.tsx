@@ -10,6 +10,8 @@ import {
   Text
 } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
+import { ScheduleActionsBar } from '../../../components/schedule/ScheduleActionsBar'
+import { ScheduleHeader } from '../../../components/schedule/ScheduleHeader'
 import { Schedule as ScheduleProps } from '../../../hooks/useSchedules'
 import { api } from '../../../services/api'
 
@@ -43,36 +45,17 @@ interface ISchedule {
 }
 
 const Schedule: NextPage<ISchedule> = ({ schedule }: ISchedule) => {
-  console.log(schedule)
-
   return (
     <Box>
-      <Stack>
-        <Heading size="sm" fontWeight="normal">
-          {schedule.name}{' '}
-          <Badge colorScheme="yellow" mx="1">
-            {schedule.status}
-          </Badge>
-        </Heading>
-
-        <Stack direction={['column', 'row']}>
-          <HStack borderRightWidth={[0, 1]} borderColor="gray.700" spacing="1">
-            <Avatar size="xs" name={schedule.author.name} />
-            <Text color="gray.300" fontSize="small" px="2">
-              {schedule.author.name}
-            </Text>
-          </HStack>
-          <Text
-            color="gray.300"
-            fontSize="small"
-            mx="1"
-          >
-            {schedule.date}
-          </Text>
-        </Stack>
-      </Stack>
+      <ScheduleHeader schedule={schedule} />
 
       <Divider my="6" borderColor="gray.700" />
+
+      <ScheduleActionsBar schedule={schedule} />
+
+      <Divider my="6" borderColor="gray.700" />
+
+      
     </Box>
   )
 }
