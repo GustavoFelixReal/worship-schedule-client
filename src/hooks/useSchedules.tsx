@@ -18,6 +18,12 @@ export type Schedule = {
   updatedAt: string
   updatedBy: number
   isArchived: boolean
+  author?: {
+    name: string
+  }
+  maintainer?: {
+    name: string
+  }
 }
 
 type CreateScheduleParams = {

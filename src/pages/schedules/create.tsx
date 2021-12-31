@@ -14,7 +14,17 @@ import { Input } from '../../components/common/Form/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
 import * as yup from 'yup'
 import { useSchedules } from '../../hooks/useSchedules'
-import { NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'schedule']))
+    }
+  }
+}
 
 type CreateScheduleFormData = {
   name: string
@@ -27,6 +37,7 @@ const createUserFormSchema = yup.object().shape({
 })
 
 const CreateSchedule: NextPage = () => {
+  const { t } = useTranslation()
   const { createSchedule } = useSchedules()
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createUserFormSchema)
@@ -41,8 +52,8 @@ const CreateSchedule: NextPage = () => {
 
   return (
     <Box as="form" onSubmit={handleSubmit(handleCreateSchedule)}>
-      <Heading size="lg" fontWeight="normal">
-        Criar agenda
+      <Heading size="md" fontWeight="normal">
+        {t('create_schedule', { ns: 'schedule' })}
       </Heading>
 
       <Divider my="6" borderColor="gray.700" />
@@ -51,7 +62,7 @@ const CreateSchedule: NextPage = () => {
         <SimpleGrid minChildWidth="240px" spacing={['6', '8']} w="100%">
           <Input
             name="name"
-            label="Nome da agenda"
+            label={t('schedule_name', { ns: 'schedule' })}
             error={errors.name}
             defaultValue={`Agenda ${new Date().toLocaleDateString()}`}
             {...register('name')}
@@ -59,7 +70,7 @@ const CreateSchedule: NextPage = () => {
           <Input
             name="date"
             type="date"
-            label="Data"
+            label={t('schedule_date', { ns: 'schedule' })}
             error={errors.date}
             {...register('date')}
           />
@@ -70,7 +81,7 @@ const CreateSchedule: NextPage = () => {
         <HStack spacing="4">
           <Link href="/schedules" passHref>
             <Button as="a" colorScheme="whiteAlpha">
-              Cancelar
+              {t('cancel')}
             </Button>
           </Link>
           <Button
@@ -78,7 +89,7 @@ const CreateSchedule: NextPage = () => {
             type="submit"
             isLoading={formState.isSubmitting}
           >
-            Salvar
+            {t('save')}
           </Button>
         </HStack>
       </Flex>

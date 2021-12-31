@@ -6,6 +6,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { AppProps } from 'next/app'
 import { ApplicationLayout } from '../components/layout/ApplicationLayout'
 import { theme } from '../../styles/theme'
+import { appWithTranslation } from 'next-i18next'
 
 function WorshipScheduleApp({ Component, pageProps }: AppProps) {
   return (
@@ -31,4 +32,4 @@ function WorshipScheduleApp({ Component, pageProps }: AppProps) {
   )
 }
 
-export default WorshipScheduleApp
+export default appWithTranslation(WorshipScheduleApp)
