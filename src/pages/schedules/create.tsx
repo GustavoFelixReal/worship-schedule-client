@@ -12,16 +12,17 @@ import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../../components/common/Form/Input'
 import { yupResolver } from '@hookform/resolvers/yup'
-import * as yup from 'yup'
+
 import { useSchedules } from '../../hooks/useSchedules'
 import { GetStaticProps, NextPage } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { createScheduleSchema } from '../../utils/validation/schemas'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ['common', 'schedule']))
+      ...(await serverSideTranslations(locale, ['common', 'schedule', 'error']))
     }
   }
 }
@@ -31,16 +32,12 @@ type CreateScheduleFormData = {
   date: string
 }
 
-const createUserFormSchema = yup.object().shape({
-  name: yup.string().required('Nome obrigatório'),
-  date: yup.date().required('A data é obrigatória')
-})
-
 const CreateSchedule: NextPage = () => {
   const { t } = useTranslation()
   const { createSchedule } = useSchedules()
+
   const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(createUserFormSchema)
+    resolver: yupResolver(createScheduleSchema(t))
   })
   const { errors } = formState
 

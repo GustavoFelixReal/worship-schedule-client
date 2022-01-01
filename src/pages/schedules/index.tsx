@@ -15,6 +15,7 @@ import {
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { Link } from '../../components/common/Link'
+import { SchedulesActionsBar } from '../../components/schedule/SchedulesActionsBar'
 import { useSchedules } from '../../hooks/useSchedules'
 
 const Schedules: NextPage = () => {
@@ -27,11 +28,16 @@ const Schedules: NextPage = () => {
 
   return (
     <Box>
-      <Heading size="lg" fontWeight="normal">
+      <Heading size="md" fontWeight="normal">
         Agendas
       </Heading>
 
       <Divider my="6" borderColor="gray.700" />
+
+      <SchedulesActionsBar />
+
+      <Divider my="6" borderColor="gray.700" />
+      
       <Table colorScheme="whiteAlpha" variant="striped" size="sm">
         <Thead>
           <Tr>

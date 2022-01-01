@@ -8,7 +8,7 @@ interface IScheduleHeader {
 export const ScheduleHeader: React.FC<IScheduleHeader> = ({ schedule }) => {
   return (
     <Stack>
-      <Heading size="sm" fontWeight="normal">
+      <Heading size="md" fontWeight="normal">
         {schedule.name}{' '}
         <Badge colorScheme="yellow" mx="1">
           {schedule.status}
