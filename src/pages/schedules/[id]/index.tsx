@@ -1,14 +1,4 @@
-import {
-  Avatar,
-  Badge,
-  Box,
-  Divider,
-  Flex,
-  Heading,
-  HStack,
-  Stack,
-  Text
-} from '@chakra-ui/react'
+import { Box, Divider } from '@chakra-ui/react'
 import { GetServerSideProps, NextPage } from 'next'
 import { ScheduleActionsBar } from '../../../components/schedule/ScheduleActionsBar'
 import { ScheduleHeader } from '../../../components/schedule/ScheduleHeader'
@@ -54,8 +44,6 @@ const Schedule: NextPage<ISchedule> = ({ schedule }: ISchedule) => {
       <ScheduleActionsBar schedule={schedule} />
 
       <Divider my="6" borderColor="gray.700" />
-
-      
     </Box>
   )
 }

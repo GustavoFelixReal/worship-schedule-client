@@ -1,12 +1,12 @@
-import { ToastContainer } from 'react-toastify'
-import { IoProvider } from '../contexts/SocketIoContext'
-
-import 'react-toastify/dist/ReactToastify.css'
 import { ChakraProvider } from '@chakra-ui/react'
-import { AppProps } from 'next/app'
-import { ApplicationLayout } from '../components/layout/ApplicationLayout'
-import { theme } from '../../styles/theme'
 import { appWithTranslation } from 'next-i18next'
+import { AppProps } from 'next/app'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import { GlobalStyles } from '../../styles/global'
+import { theme } from '../../styles/theme'
+import { ApplicationLayout } from '../components/layout/ApplicationLayout'
+import { IoProvider } from '../contexts/SocketIoContext'
 
 function WorshipScheduleApp({ Component, pageProps }: AppProps) {
   return (
@@ -28,6 +28,8 @@ function WorshipScheduleApp({ Component, pageProps }: AppProps) {
           pauseOnHover
         />
       </IoProvider>
+
+      <GlobalStyles />
     </ChakraProvider>
   )
 }

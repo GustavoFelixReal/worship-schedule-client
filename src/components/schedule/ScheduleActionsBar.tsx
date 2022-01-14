@@ -1,4 +1,5 @@
-import { Button, Icon, HStack, IconButton } from '@chakra-ui/react'
+import { HStack, Icon, IconButton } from '@chakra-ui/react'
+import Link from 'next/link'
 import {
   RiAddLine,
   RiCheckLine,
@@ -7,7 +8,6 @@ import {
   RiThumbUpLine
 } from 'react-icons/ri'
 import { Schedule } from '../../hooks/useSchedules'
-import Link from 'next/link'
 
 interface IScheduleActionsBar {
   schedule: Schedule
@@ -42,12 +42,12 @@ export const ScheduleActionsBar: React.FC<IScheduleActionsBar> = ({
       ) : (
         <>
           <HStack borderRightWidth={1} borderColor="gray.700" pr="2">
-            <Button
-              leftIcon={<Icon as={RiCheckLine} fontSize="25" />}
+            <IconButton
+              aria-label={''}
+              icon={<Icon as={RiCheckLine} fontSize="25" />}
               colorScheme="green"
-            >
-              Concluir agenda
-            </Button>
+              p="1"
+            />
             <IconButton
               aria-label={''}
               icon={<Icon as={RiCloseLine} fontSize="25" />}
