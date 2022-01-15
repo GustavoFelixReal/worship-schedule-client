@@ -1,6 +1,6 @@
 import { Button, HStack, Icon } from '@chakra-ui/react'
-import { RiAddLine, RiNotificationLine, RiUserAddLine } from 'react-icons/ri'
 import Link from 'next/link'
+import { RiAddLine, RiNotificationLine, RiUserAddLine } from 'react-icons/ri'
 
 export const NotificationsNav: React.FC = () => {
   return (

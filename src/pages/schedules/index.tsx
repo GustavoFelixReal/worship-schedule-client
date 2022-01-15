@@ -1,35 +1,27 @@
-import {
-  Box,
-  Heading,
-  Divider,
-  Table,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-  Badge,
-  useBreakpointValue
-} from '@chakra-ui/react'
-import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { Link } from '../../components/common/Link'
+import { Box, Divider, Heading } from '@chakra-ui/react'
+import { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { SchedulesActionsBar } from '../../components/schedule/SchedulesActionsBar'
+import SchedulesTable from '../../components/schedule/SchedulesTable'
 import { useSchedules } from '../../hooks/useSchedules'
 
-const Schedules: NextPage = () => {
-  const isWideVersion = useBreakpointValue({
-    base: false,
-    sm: true
-  })
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common', 'schedule', 'error']))
+    }
+  }
+}
 
+const Schedules: NextPage = () => {
+  const { t } = useTranslation('schedule')
   const { schedules } = useSchedules()
 
   return (
     <Box>
       <Heading size="md" fontWeight="normal">
-        Agendas
+        {t('schedules')}
       </Heading>
 
       <Divider my="6" borderColor="gray.700" />
@@ -37,35 +29,8 @@ const Schedules: NextPage = () => {
       <SchedulesActionsBar />
 
       <Divider my="6" borderColor="gray.700" />
-      
-      <Table colorScheme="whiteAlpha" variant="striped" size="sm">
-        <Thead>
-          <Tr>
-            {/*<Th px={['4', '4', '6']} color="gray.300" width="8">
-              <Checkbox colorScheme="pink" />
-            </Th> */}
-            <Th>Agenda</Th>
-            <Th>Situação</Th>
-            {isWideVersion && <Th>Data</Th>}
-          </Tr>
-        </Thead>
-        <Tbody>
-          {schedules.map((schedule) => (
-            <Tr key={schedule.id}>
-              {/* <Td px={['4', '4', '6']}>
-                <Checkbox colorScheme="pink" />
-              </Td> */}
-              <Td>
-                <Link href={`schedules/${schedule.id}`}>{schedule.name}</Link>
-              </Td>
-              <Td>
-                <Badge colorScheme="yellow">{schedule.status}</Badge>
-              </Td>
-              {isWideVersion && <Td>{schedule.date}</Td>}
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
+
+      <SchedulesTable schedules={schedules} />
     </Box>
   )
 }

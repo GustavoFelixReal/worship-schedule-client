@@ -1,8 +1,8 @@
 import { Icon, IconButton, Stack } from '@chakra-ui/react'
-import { RiAddLine } from 'react-icons/ri'
-import { SchedulesDateFilter } from './SchedulesDateFilter'
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
+import { RiAddLine } from 'react-icons/ri'
+import { SchedulesDateFilter } from './SchedulesDateFilter'
 
 export const SchedulesActionsBar: React.FC = () => {
   const { t } = useTranslation('schedule')
@@ -15,7 +15,7 @@ export const SchedulesActionsBar: React.FC = () => {
         pr="2"
         align="center"
       >
-        <Link href="/schedules/create">
+        <Link href="/schedules/create" passHref>
           <IconButton
             as="a"
             aria-label={t('create_schedule')}

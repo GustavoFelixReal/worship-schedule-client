@@ -8,15 +8,14 @@ import {
   SimpleGrid,
   VStack
 } from '@chakra-ui/react'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { GetStaticProps, NextPage } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Link from 'next/link'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../../components/common/Form/Input'
-import { yupResolver } from '@hookform/resolvers/yup'
-
 import { useSchedules } from '../../hooks/useSchedules'
-import { GetStaticProps, NextPage } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTranslation } from 'next-i18next'
 import { createScheduleSchema } from '../../utils/validation/schemas'
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {

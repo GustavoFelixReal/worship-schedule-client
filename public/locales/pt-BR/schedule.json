@@ -1,5 +1,13 @@
 {
+  "schedules": "Agendas",
+
   "create_schedule": "Criar agenda",
   "schedule_name": "Nome da agenda",
-  "schedule_date": "Data da agenda"
+  "schedule_date": "Data da agenda",
+
+  "pending": "Pendente",
+  "approved": "Aprovado",
+  "rejected": "Rejeitado",
+  "canceled": "Cancelado",
+  "completed": "Concluído"
 }

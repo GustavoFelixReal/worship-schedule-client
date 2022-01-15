@@ -6,12 +6,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import { GlobalStyles } from '../../styles/global'
 import { theme } from '../../styles/theme'
 import { ApplicationLayout } from '../components/layout/ApplicationLayout'
-import { IoProvider } from '../contexts/SocketIoContext'
+import { IoContext, socket } from '../contexts/SocketIoContext'
 
 function WorshipScheduleApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <IoProvider>
+      <IoContext.Provider value={socket}>
         <ApplicationLayout>
           <Component {...pageProps} />
         </ApplicationLayout>
@@ -27,8 +27,7 @@ function WorshipScheduleApp({ Component, pageProps }: AppProps) {
           draggable
           pauseOnHover
         />
-      </IoProvider>
-
+      </IoContext.Provider>
       <GlobalStyles />
     </ChakraProvider>
   )

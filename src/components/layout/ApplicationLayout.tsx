@@ -1,15 +1,16 @@
-import { SidebarDrawerProvider } from '../../contexts/SidebarDrawerContext'
-
 import { Box, Flex } from '@chakra-ui/react'
+import { SidebarDrawerProvider } from '../../contexts/SidebarDrawerContext'
+import { SchedulesProvider } from '../../hooks/useSchedules'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
-import { SchedulesProvider } from '../../hooks/useSchedules'
 
 interface IApplicationLayout {
   children: React.ReactNode
 }
 
-export const ApplicationLayout: React.FC<IApplicationLayout> = ({ children }) => {
+export const ApplicationLayout: React.FC<IApplicationLayout> = ({
+  children
+}) => {
   return (
     <SidebarDrawerProvider>
       <SchedulesProvider>

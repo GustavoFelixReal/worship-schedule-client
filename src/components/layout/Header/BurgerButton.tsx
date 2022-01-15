@@ -1,6 +1,6 @@
-import { Icon, IconButton } from "@chakra-ui/react";
-import { RiMenuLine } from "react-icons/ri";
-import { useSidebarDrawer } from "../../../contexts/SidebarDrawerContext";
+import { Icon, IconButton } from '@chakra-ui/react'
+import { RiMenuLine } from 'react-icons/ri'
+import { useSidebarDrawer } from '../../../contexts/SidebarDrawerContext'
 
 export const BurgerButton: React.FC = () => {
   const { onOpen } = useSidebarDrawer()

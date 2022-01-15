@@ -1,7 +1,7 @@
-import { Box, Text, Stack } from "@chakra-ui/react";
+import { Box, Stack, Text } from '@chakra-ui/react'
 
 interface INavSection {
-  title: string;
+  title: string
   children: React.ReactNode
 }
 

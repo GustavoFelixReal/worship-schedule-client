@@ -1,27 +1,39 @@
-import { Avatar, Badge, Heading, HStack, Stack, Text } from '@chakra-ui/react'
-import { Schedule } from '../../hooks/useSchedules'
+import {
+  Heading,
+  HStack,
+  Icon,
+  IconButton,
+  Stack,
+  Text
+} from '@chakra-ui/react'
+import { useRouter } from 'next/router'
+import { RiArrowLeftLine } from 'react-icons/ri'
+import { useCurrentSchedule } from '../../hooks/useCurrentSchedule'
+import ScheduleAuthor from './ScheduleAuthor'
+import ScheduleStatusBadge from './ScheduleStatusBadge'
 
-interface IScheduleHeader {
-  schedule: Schedule
-}
+export const ScheduleHeader: React.FC = () => {
+  const { back } = useRouter()
+  const { schedule } = useCurrentSchedule()
 
-export const ScheduleHeader: React.FC<IScheduleHeader> = ({ schedule }) => {
   return (
     <Stack>
-      <Heading size="md" fontWeight="normal">
-        {schedule.name}{' '}
-        <Badge colorScheme="yellow" mx="1">
-          {schedule.status}
-        </Badge>
-      </Heading>
+      <HStack>
+        <IconButton
+          aria-label={''}
+          variant="ghost"
+          icon={<Icon as={RiArrowLeftLine} fontSize="25" />}
+          _hover={{ color: 'gray.900', backgroundColor: 'gray.50' }}
+          onClick={back}
+        />
+        <Heading size="md" fontWeight="normal">
+          {schedule.name}{' '}
+          <ScheduleStatusBadge status={schedule.statusFormatted} />
+        </Heading>
+      </HStack>
 
       <Stack direction={['column', 'row']}>
-        <HStack borderRightWidth={[0, 1]} borderColor="gray.700" spacing="1">
-          <Avatar size="xs" name={schedule.author.name} />
-          <Text color="gray.300" fontSize="small" px="2">
-            {schedule.author.name}
-          </Text>
-        </HStack>
+        <ScheduleAuthor name={schedule.author.name} showBorder />
         <Text color="gray.300" fontSize="small" mx="1">
           {schedule.date}
         </Text>

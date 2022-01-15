@@ -18,7 +18,7 @@ export const SidebarDrawerProvider: React.FC<ISidebarDrawerProvider> = ({
 
   useEffect(() => {
     disclosure.onClose()
-  }, [router.asPath])
+  }, [router.asPath, disclosure])
 
   return (
     <SidebarDrawerContext.Provider value={disclosure}>

@@ -12,11 +12,11 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useSchedules } from '../../../hooks/useSchedules'
 import Link from 'next/link'
-import { createScheduleItemSchema } from '../../../utils/validation/schemas'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { Input } from '../../../components/common/Form/Input'
+//import { useSchedules } from '../../../hooks/useSchedules'
+import { createScheduleItemSchema } from '../../../utils/validation/schemas'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
@@ -42,7 +42,7 @@ interface CreateScheduleItemFormData {
 
 const CreateScheduleItem: NextPage = () => {
   const { t } = useTranslation()
-  const { createSchedule } = useSchedules()
+  //const { createSchedule } = useSchedules()
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(createScheduleItemSchema(t))

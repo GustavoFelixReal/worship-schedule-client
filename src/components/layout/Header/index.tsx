@@ -1,5 +1,5 @@
-import { BurgerButton } from './BurgerButton'
 import { Flex, useBreakpointValue } from '@chakra-ui/react'
+import { BurgerButton } from './BurgerButton'
 import { Logo } from './Logo'
 import { NotificationsNav } from './NotificationsNav'
 import { Profile } from './Profile'
@@ -7,12 +7,12 @@ import { Profile } from './Profile'
 export const Header: React.FC = () => {
   const isWideVersion = useBreakpointValue({
     base: false,
-    sm: true,
+    sm: true
   })
 
   const showBurgerButton = useBreakpointValue({
     base: true,
-    lg: false,
+    lg: false
   })
 
   return (

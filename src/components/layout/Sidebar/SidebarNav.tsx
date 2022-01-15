@@ -1,12 +1,12 @@
+import { Stack } from '@chakra-ui/react'
 import {
+  RiCalendarTodoLine,
   RiContactsLine,
-  RiInputMethodLine,
   RiGitMergeLine,
-  RiCalendarTodoLine
+  RiInputMethodLine
 } from 'react-icons/ri'
 import { NavLink } from './NavLink'
 import { NavSection } from './NavSection'
-import { Stack } from '@chakra-ui/react'
 
 export const SidebarNav: React.FC = () => {
   return (

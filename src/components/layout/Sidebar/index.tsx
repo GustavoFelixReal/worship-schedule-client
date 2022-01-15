@@ -1,7 +1,14 @@
-import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, useBreakpointValue } from '@chakra-ui/react'
+import {
+  Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  useBreakpointValue
+} from '@chakra-ui/react'
 import { useSidebarDrawer } from '../../../contexts/SidebarDrawerContext'
-
-
 import { SidebarNav } from './SidebarNav'
 
 export const Sidebar: React.FC = () => {

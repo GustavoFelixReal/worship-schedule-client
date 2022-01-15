@@ -1,7 +1,6 @@
-import { Input, Icon, IconButton, Stack } from '@chakra-ui/react'
-import { RiFilterLine } from 'react-icons/ri'
-
+import { Icon, IconButton, Input, Stack } from '@chakra-ui/react'
 import moment from 'moment'
+import { RiFilterLine } from 'react-icons/ri'
 
 export const SchedulesDateFilter: React.FC = () => {
   return (

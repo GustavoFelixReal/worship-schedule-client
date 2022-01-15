@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next'
 import {
   createContext,
   useCallback,
@@ -5,7 +6,9 @@ import {
   useEffect,
   useState
 } from 'react'
+import { toast } from 'react-toastify'
 import { useIo } from '../contexts/SocketIoContext'
+import { api } from '../services/api'
 
 export type Schedule = {
   id: number
@@ -13,6 +16,7 @@ export type Schedule = {
   name: string
   date: string
   status: string
+  statusFormatted?: string
   createdAt: string
   createdBy: number
   updatedAt: string
@@ -34,6 +38,7 @@ type CreateScheduleParams = {
 interface SocketResponse {
   schedules?: Schedule[]
   createSchedule: (schedule: CreateScheduleParams) => void
+  changeScheduleStatus: (scheduleId: number, status: string) => void
 }
 
 interface ScheduleEmitter {
@@ -49,6 +54,8 @@ export const SchedulesContext = createContext({} as SocketResponse)
 export const SchedulesProvider: React.FC<SchedulesProviderProps> = ({
   children
 }) => {
+  const { t } = useTranslation('success')
+
   const socket = useIo()
   const [schedules, setSchedules] = useState<Schedule[]>([])
 
@@ -56,7 +63,19 @@ export const SchedulesProvider: React.FC<SchedulesProviderProps> = ({
     const params = { churchId: 1 }
 
     socket?.emit('join_church', { params }, ({ schedules }: SocketResponse) => {
-      setSchedules([...schedules])
+      const newSchedules = schedules.map((schedule) => {
+        return {
+          ...schedule,
+          statusFormatted: schedule.status.toLowerCase(),
+          date: new Date(schedule.date).toLocaleDateString('pt-BR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })
+        }
+      })
+
+      setSchedules([...newSchedules])
     })
   }, [socket])
 
@@ -67,6 +86,40 @@ export const SchedulesProvider: React.FC<SchedulesProviderProps> = ({
       socket?.emit('create_schedule', { params })
     },
     [socket]
+  )
+
+  const changeScheduleStatus = useCallback(
+    async (scheduleId: number, status: string) => {
+      const params = { churchId: 1, scheduleId, status }
+
+      await api
+        .put('changeStatus', params)
+        .then(() => {
+          const schedule = schedules.find(
+            (schedule) => schedule.id === scheduleId
+          )
+
+          const scheduleIndex = schedules.findIndex(
+            (schedule) => schedule.id === scheduleId
+          )
+
+          const newSchedules = schedules
+
+          newSchedules.splice(scheduleIndex, 1)
+
+          const newSchedule = {
+            ...schedule,
+            status,
+            statusFormatted: status.toLowerCase()
+          }
+
+          setSchedules([...newSchedules, newSchedule])
+
+          toast.success(t('schedule_status_updated_successfully'))
+        })
+        .catch((error) => console.log(error))
+    },
+    [schedules]
   )
 
   useEffect(getSchedules, [])
@@ -82,7 +135,13 @@ export const SchedulesProvider: React.FC<SchedulesProviderProps> = ({
   }, [socket, setSchedules])
 
   return (
-    <SchedulesContext.Provider value={{ schedules, createSchedule }}>
+    <SchedulesContext.Provider
+      value={{
+        schedules,
+        createSchedule,
+        changeScheduleStatus
+      }}
+    >
       {children}
     </SchedulesContext.Provider>
   )
